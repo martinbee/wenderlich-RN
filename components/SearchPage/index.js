@@ -16,11 +16,11 @@ export default class SearchPage extends Component {
     searchStatusMessage: '',
   };
 
-  handleResponse(response) {
+  handleResponse({ listings }) {
     this.setState({ isLoading: false });
 
-    if (response.listings && response.listings.length) {
-      console.log('Properties found: ' + response.listings.length);
+    if (listings && listings.length) {
+      this.props.navigation.navigate('Results', { listings });
     } else {
       this.setState({ searchStatusMessage: 'Location not recognized, please try again.'});
     }

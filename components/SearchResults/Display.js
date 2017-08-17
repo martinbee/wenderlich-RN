@@ -1,12 +1,36 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
+  TouchableHighlight,
+  ActivityIndicator,
+  FlatList,
   Text,
   View,
 } from 'react-native';
 
-const SearchResultsDisplay = () => {
-  return <Text>Results</Text>;
+const SearchResultsDisplay = ({ listings }) => {
+  const keyExtractor = (item, index) => index;
+
+  const renderItem = ({ item }) => {
+    return (
+      <TouchableHighlight
+        underlayColor='#dddddd'>
+        <View>
+          <Text>{item.title}</Text>
+        </View>
+      </TouchableHighlight>
+    );
+  };
+
+  if (!listings.length) return <ActivityIndicator size='large' />;
+
+  return (
+    <FlatList
+      data={listings}
+      keyExtractor={keyExtractor}
+      renderItem={renderItem}
+    />
+  );
 };
 
 const styles = StyleSheet.create({
@@ -53,4 +77,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchPageDisplay;
+export default SearchResultsDisplay;
