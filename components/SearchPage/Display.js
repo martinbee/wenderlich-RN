@@ -48,7 +48,7 @@ const SearchPageDisplay = ({
   const renderSpinner = () => <ActivityIndicator size='large' style={styles.spinner} />;
 
   const renderStatusMessage = () => (
-    <Text style={styles.description}>
+    <Text style={styles.error}>
       {searchStatusMessage}
     </Text>
   );
@@ -59,6 +59,7 @@ const SearchPageDisplay = ({
       {renderInput()}
       {renderImage()}
       {isLoading && renderSpinner()}
+      {renderStatusMessage()}
     </View>
   );
 };
@@ -98,6 +99,13 @@ const styles = StyleSheet.create({
   spinner: {
     marginTop: 10,
   },
+  error: {
+    marginTop: 10,
+    marginBottom: 20,
+    fontSize: 18,
+    textAlign: 'center',
+    color: 'red',
+  }
 });
 
 export default SearchPageDisplay;

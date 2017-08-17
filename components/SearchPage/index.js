@@ -5,7 +5,7 @@ import urlForQueryAndPage from './utilities/urlForQueryAndPage.js';
 import Display from './Display';
 import houseImg from '../../resources/house.png';
 
-class SearchPage extends Component {
+export default class SearchPage extends Component {
   static navigationOptions = {
     title: 'Property Finder',
   };
@@ -29,13 +29,10 @@ class SearchPage extends Component {
   executeQuery(query) {
     this.setState({ isLoading: true, searchStatusMessage: '' });
 
-    Keyboard.dismiss();
-
     fetch(query)
       .then(response => response.json())
       .then(json => this.handleResponse(json.response))
       .catch((error) => {
-         console.log(error);
          this.setState({
           isLoading: false,
           searchStatusMessage: `Something bad happened ${error}`,
@@ -44,7 +41,15 @@ class SearchPage extends Component {
   }
 
   search = () => {
-    const query = urlForQueryAndPage('place_name', this.state.searchValue, 1);
+    Keyboard.dismiss();
+
+    const { searchValue } = this.state;
+
+    if (!searchValue) {
+      return this.setState({ searchStatusMessage: 'Please add a name or postcode.' });
+    }
+
+    const query = urlForQueryAndPage('place_name', searchValue, 1);
 
     this.executeQuery(query);
   };
@@ -66,5 +71,3 @@ class SearchPage extends Component {
     );
   }
 }
-
-export default SearchPage;
