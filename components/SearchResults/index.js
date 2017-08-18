@@ -7,7 +7,7 @@ export default class SearchResults extends Component {
     listings: [],
   };
 
-  componentDidMount() {
+  componentWillMount() {
     const { listings } = this.props.navigation.state.params;
 
     this.setState({ listings });
