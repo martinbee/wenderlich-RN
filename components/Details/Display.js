@@ -3,6 +3,7 @@ import { startCase } from 'lodash';
 
 import {
   StyleSheet,
+  ScrollView,
   View,
   Image,
   Text,
@@ -22,52 +23,64 @@ const DetailsDisplay = ({
   const price = price_formatted.split(' ')[0];
 
   const renderTitle = () => (
-    <View style={styles.titleContainer}>
-      <Text style={styles.title} numberOfLines={2}>
-        {title}
-      </Text>
-    </View>
+    <Text style={styles.title} numberOfLines={2}>
+      {title}
+    </Text>
   );
 
-  const renderCoreInfo = () => (
-    <Text>
-      Price: {price}
-    </Text>
-    <Text>
-      Bedrooms: {bedroom_number}
-    </Text>
-    <Text>
-      Property Type: {startCase(property_type)}
-    </Text>
-  );
+  const renderCoreInfo = () => {
+    const coreItems = [
+      {
+        key: 'Price',
+        value: price,
+      },
+      {
+        key: 'Bedrooms',
+        value: bedroom_number,
+      },
+      {
+        key: 'Property Type',
+        value: startCase(property_type),
+      },
+      {
+        key: 'Lister',
+        value: lister_name,
+      },
+      {
+        key: 'Tags',
+        value: keywords,
+      },
+    ];
+
+    const renderCoreItems = () => coreItems.map(({ key, value }) => (
+      <View key={key} style={styles.coreItem}>
+        <Text style={styles.coreItemKey}>{key}: </Text>
+        <Text numberOfLines={2}>{value}</Text>
+      </View>
+    ));
+
+    return (
+      <View style={styles.coreContainer}>
+        {renderCoreItems()}
+      </View>
+    );
+  };
 
   const renderSummary = () => (
-    <Text style={styles.summary} numberOfLines={3}>
+    <Text numberOfLines={2}>
       {summary}
     </Text>
   );
 
-  const renderLister = () => (
-    <Text>
-      Lister: {lister_name}
-    </Text>
-  );
-
-  const renderKeywords = () => (
-    <Text>Tags: {keywords}</Text>
-  );
-
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image style={styles.image} source={{ uri: img_url }} />
       {renderTitle()}
       <View style={styles.textContainer}>
         {renderSummary()}
         {renderCoreInfo()}
-        {renderLister()}
-        {renderKeywords()}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -75,10 +88,7 @@ export default DetailsDisplay;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  },
-  titleContainer: {
-    alignItems: 'center',
+    flex: 1,
   },
   title: {
     fontSize: 18,
@@ -90,15 +100,19 @@ const styles = StyleSheet.create({
     height: 300,
   },
   textContainer: {
-    padding: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
   },
-  separator: {
-    height: 1,
-    backgroundColor: '#dddddd'
+  coreContainer: {
+    marginTop: 10,
+    marginBottom: 10,
   },
-  price: {
-    fontSize: 25,
+  coreItem: {
+    flexDirection: 'row',
+    paddingTop: 5,
+  },
+  coreItemKey: {
     fontWeight: 'bold',
-    color: '#48BBEC'
   },
 });
