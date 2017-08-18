@@ -1,13 +1,15 @@
 import React from 'react';
 import { startCase } from 'lodash';
-
 import {
-  StyleSheet,
   ScrollView,
   View,
   Image,
+  Linking,
   Text,
+  Button,
 } from 'react-native';
+
+import styles from './styles';
 
 const DetailsDisplay = ({
   title,
@@ -17,7 +19,6 @@ const DetailsDisplay = ({
   bedroom_number,
   property_type,
   summary,
-  lister_name,
   lister_url,
 }) => {
   const price = price_formatted.split(' ')[0];
@@ -25,6 +26,12 @@ const DetailsDisplay = ({
   const renderTitle = () => (
     <Text style={styles.title} numberOfLines={2}>
       {title}
+    </Text>
+  );
+
+  const renderSummary = () => (
+    <Text numberOfLines={2}>
+      {summary}
     </Text>
   );
 
@@ -43,21 +50,21 @@ const DetailsDisplay = ({
         value: startCase(property_type),
       },
       {
-        key: 'Lister',
-        value: lister_name,
-      },
-      {
         key: 'Tags',
         value: keywords,
       },
     ];
 
-    const renderCoreItems = () => coreItems.map(({ key, value }) => (
-      <View key={key} style={styles.coreItem}>
-        <Text style={styles.coreItemKey}>{key}: </Text>
-        <Text numberOfLines={2}>{value}</Text>
-      </View>
-    ));
+    const renderCoreItems = () => coreItems.map(({ key, value }) => {
+      if (!value) return null;
+
+      return (
+        <View key={key} style={styles.coreItem}>
+          <Text style={styles.coreItemKey}>{key}: </Text>
+          <Text style={styles.coreItemValue} numberOfLines={2}>{value}</Text>
+        </View>
+      );
+    });
 
     return (
       <View style={styles.coreContainer}>
@@ -66,10 +73,12 @@ const DetailsDisplay = ({
     );
   };
 
-  const renderSummary = () => (
-    <Text numberOfLines={2}>
-      {summary}
-    </Text>
+  const renderLink = () => (
+    <Button
+      onPress={() => Linking.openURL(lister_url)}
+      title="Go To Listing"
+      style={styles.button}
+    />
   );
 
   return (
@@ -80,39 +89,9 @@ const DetailsDisplay = ({
         {renderSummary()}
         {renderCoreInfo()}
       </View>
+      {renderLink()}
     </ScrollView>
   );
 };
 
 export default DetailsDisplay;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 18,
-    color: '#656565',
-    padding: 10,
-  },
-  image: {
-    width: 400,
-    height: 300,
-  },
-  textContainer: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 10,
-  },
-  coreContainer: {
-    marginTop: 10,
-    marginBottom: 10,
-  },
-  coreItem: {
-    flexDirection: 'row',
-    paddingTop: 5,
-  },
-  coreItemKey: {
-    fontWeight: 'bold',
-  },
-});

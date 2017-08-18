@@ -1,11 +1,12 @@
 import React from 'react';
 import {
-  StyleSheet,
   TouchableHighlight,
   View,
   Image,
   Text,
 } from 'react-native';
+
+import styles from './styles';
 
 const ListItem = ({ onPressItem, index, item }) => {
   const onPress = () => onPressItem(item);
@@ -35,33 +36,5 @@ const ListItem = ({ onPressItem, index, item }) => {
     </TouchableHighlight>
   );
 };
-
-const styles = StyleSheet.create({
-  thumb: {
-    width: 80,
-    height: 80,
-    marginRight: 10
-  },
-  textContainer: {
-    flex: 1
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#dddddd'
-  },
-  price: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    color: '#48BBEC'
-  },
-  title: {
-    fontSize: 20,
-    color: '#656565'
-  },
-  rowContainer: {
-    flexDirection: 'row',
-    padding: 10
-  },
-});
 
 export default ListItem;
