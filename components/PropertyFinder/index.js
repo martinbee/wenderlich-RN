@@ -3,6 +3,7 @@ import { StackNavigator } from 'react-navigation';
 
 import SearchPage from '../SearchPage';
 import SearchResults from '../SearchResults';
+import Details from '../Details';
 
 const PropertyFinder = StackNavigator({
   Home: {
@@ -10,7 +11,10 @@ const PropertyFinder = StackNavigator({
   },
   Results: {
     screen: SearchResults,
-  }
+  },
+  Details :{
+    screen: Details,
+  },
 });
 
 export default PropertyFinder;

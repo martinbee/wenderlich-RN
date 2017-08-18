@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 const ListItem = ({ onPressItem, index, item }) => {
-  const onPress = () => onPressItem(index);
+  const onPress = () => onPressItem(item);
 
   const { price_formatted, img_url, title } = item;
   const price = price_formatted.split(' ')[0];

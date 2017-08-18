@@ -6,12 +6,10 @@ import {
 
 import ListItem from './ListItem/index.js';
 
-const SearchResultsDisplay = ({ listings }) => {
+const SearchResultsDisplay = ({ listings, onPressItem }) => {
   if (!listings.length) return <ActivityIndicator size='large' />;
 
   const keyExtractor = (item, index) => index;
-
-  const onPressItem = index => console.log(`Pressed row: ${index}`);
 
   const renderItem = ({ item, index }) => (
     <ListItem

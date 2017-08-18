@@ -1,19 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Display from './Display';
 
-export default class SearchResults extends Component {
-  state = {
-    listings: [],
-  };
+const SearchResults = ({ navigation }) => {
+  const { state, navigate } = navigation;
 
-  componentWillMount() {
-    const { listings } = this.props.navigation.state.params;
+  const { listings } = state.params;
+  const onPressItem = item => navigate('Details', { item });
 
-    this.setState({ listings });
-  }
-
-  render() {
-    return <Display listings={this.state.listings} />;
-  }
+  return <Display listings={listings} onPressItem={onPressItem} />;
 };
+
+export default SearchResults;
